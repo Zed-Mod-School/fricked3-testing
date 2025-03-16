@@ -1,68 +1,66 @@
-name: Sync Upstream and Open PR
+name: Sync with Upstream and Create PR
 
 on:
+  workflow_dispatch:
   schedule:
-    - cron: "0 */6 * * *"  # Runs every 6 hours
-  workflow_dispatch:  # Allows manual trigger
+    - cron: "0 0 * * *" # Runs daily at midnight
 
 jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout target repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Fetch full history to detect new commits
+          fetch-depth: 0
 
       - name: Add upstream repository
-        run: |
-          git remote add upstream https://github.com/Zed-Mod-School/mod-base-test-1.git
-          git fetch upstream
+        run: git remote add upstream https://github.com/Zed-Mod-School/mod-base-test-1.git
+
+      - name: Fetch upstream changes
+        run: git fetch upstream
 
       - name: Check for new commits
-        id: check_commits
+        id: check_new_commits
         run: |
-          UPSTREAM_BRANCH="master"
-          LOCAL_BRANCH="master"
-          git fetch upstream $UPSTREAM_BRANCH
-          NEW_COMMITS=$(git rev-list HEAD..upstream/$UPSTREAM_BRANCH --count)
-
-          if [ "$NEW_COMMITS" -gt 0 ]; then
-            echo "New commits found: $NEW_COMMITS"
-            echo "new_commits=true" >> $GITHUB_ENV
-          else
-            echo "No new commits."
-            echo "new_commits=false" >> $GITHUB_ENV
+          UPSTREAM_COMMITS=$(git rev-list HEAD..upstream/main --count)
+          echo "Upstream commits: $UPSTREAM_COMMITS"
+          if [ "$UPSTREAM_COMMITS" -eq "0" ]; then
+            echo "No new commits found. Exiting."
+            exit 0
           fi
 
-      - name: Create new branch and merge upstream changes
-        if: env.new_commits == 'true'
+      - name: Create new branch for update
         run: |
-          PR_BRANCH="sync-upstream-$(date +%Y%m%d-%H%M%S)"
-          git checkout -b $PR_BRANCH
-          echo "PR_BRANCH=$PR_BRANCH" >> $GITHUB_ENV
+          BRANCH_NAME="sync-upstream-$(date +%Y%m%d%H%M%S)"
+          git checkout -b "$BRANCH_NAME"
+          git merge upstream/main || echo "Merge conflicts detected. Resolving manually."
+          git status
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
 
-      - name: Set Git Identity
-        if: env.new_commits == 'true'
+      - name: Commit merge conflicts (if any)
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
+          git add -A || true
+          git commit -m "Merge upstream changes" || echo "No changes to commit."
 
-      - name: Merge upstream changes
-        if: env.new_commits == 'true'
+      - name: Push changes to new branch
         run: |
-          git merge --no-edit upstream/master
-
-      - name: Debug PAT
-        run: |
-          echo "Using PAT: ${#PAT} characters long"
+          git push origin "$BRANCH_NAME"
         env:
-          PAT: ${{ secrets.PAT }}
+          GITHUB_TOKEN: ${{ secrets.PAT }}
 
-      - name: Push Changes
-        if: env.new_commits == 'true'
-        run: |
-          echo "Setting Git remote..."
-          git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/Zed-Mod-School/fricked3-testing.git
-          echo "Attempting to push..."
-          git push origin $PR_BRANCH
+      - name: Create pull request
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.PAT }}
+          script: |
+            const branch = process.env.BRANCH_NAME;
+            const { data: pr } = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Sync with Upstream - ${branch}`,
+              head: branch,
+              base: 'main',
+              body: 'This PR includes updates from the upstream repository. If conflicts exist, please resolve them before merging.'
+            });
+            console.log(`Created PR: ${pr.html_url}`);
