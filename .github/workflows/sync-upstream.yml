@@ -16,7 +16,7 @@ jobs:
 
       - name: Add upstream repository
         run: |
-          git remote add upstream https://github.com/open-goal/jak-project.git
+          git remote add upstream https://github.com/Zed-Mod-School/mod-base-test-1.git
           git fetch upstream
 
       - name: Check for new commits
