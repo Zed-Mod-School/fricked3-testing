@@ -14,6 +14,11 @@ jobs:
         with:
           fetch-depth: 0  # Fetch full history to detect new commits
 
+      - name: Set Git identity
+        run: |
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+
       - name: Add upstream repository
         run: |
           git remote add upstream https://github.com/Zed-Mod-School/mod-base-test-1.git
@@ -34,14 +39,21 @@ jobs:
             echo "new_commits=false" >> $GITHUB_ENV
           fi
 
-      - name: Create Pull Request from upstream
+      - name: Merge upstream changes into a new branch
         if: env.new_commits == 'true'
-        uses: peter-evans/pull-request-action@v2
+        run: |
+          PR_BRANCH="sync-upstream-$(date +%Y%m%d-%H%M%S)"
+          git checkout -b $PR_BRANCH
+          git merge --no-edit upstream/master
+          echo "PR_BRANCH=$PR_BRANCH" >> $GITHUB_ENV
+
+      - name: Create Pull Request
+        if: env.new_commits == 'true'
+        uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          repository: ${{ github.repository }}
-          source_branch: "upstream/master"
-          destination_branch: "master"
+          branch: ${{ env.PR_BRANCH }}
+          base: master
           title: "Sync upstream changes"
           body: "This PR merges updates from the upstream repository."
           labels: "automated PR"
