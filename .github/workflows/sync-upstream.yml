@@ -54,7 +54,9 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ env.PR_BRANCH }}
+          commit-message: "Attempt to merge upstream changes (conflicts may need resolution)"
+          branch: ${{ env.PR_BRANCH }}  # Let GitHub Actions create this branch
+          delete-branch: true
           base: master
           title: "Sync upstream changes"
           body: "This PR attempts to merge upstream changes. **Conflicts may need manual resolution.**"
