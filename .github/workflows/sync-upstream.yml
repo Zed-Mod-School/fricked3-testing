@@ -52,6 +52,11 @@ jobs:
         if: env.new_commits == 'true'
         run: |
           git merge --no-edit upstream/master
+
+      - name: Push Changes
+        if: env.new_commits == 'true'
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/Zed-Mod-School/fricked3-testing.git
           git push origin $PR_BRANCH
 
       - name: Create Pull Request
