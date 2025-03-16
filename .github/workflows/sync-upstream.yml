@@ -39,7 +39,7 @@ jobs:
             echo "new_commits=false" >> $GITHUB_ENV
           fi
 
-      - name: Create new branch and attempt merge
+      - name: Create and attempt merge (even with conflicts)
         if: env.new_commits == 'true'
         run: |
           PR_BRANCH="sync-upstream-$(date +%Y%m%d-%H%M%S)"
@@ -55,8 +55,8 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "Attempt to merge upstream changes (conflicts may need resolution)"
-          branch: ${{ env.PR_BRANCH }}  # Let GitHub Actions create this branch
-          delete-branch: true
+          branch: ${{ env.PR_BRANCH }}  # `create-pull-request` will create and push this branch
+          delete-branch: true  # Ensures re-runs don't fail due to branch conflicts
           base: master
           title: "Sync upstream changes"
           body: "This PR attempts to merge upstream changes. **Conflicts may need manual resolution.**"
