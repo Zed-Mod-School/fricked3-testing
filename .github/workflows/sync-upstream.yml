@@ -6,7 +6,7 @@ on:
   workflow_dispatch:  # Allows manual trigger
 
 jobs:
-  sync_mod_base:
+  sync:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -14,20 +14,16 @@ jobs:
         with:
           fetch-depth: 0  # Fetch full history to detect new commits
 
-      - name: Set Git identity
-        run: |
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-
       - name: Add upstream repository
         run: |
           git remote add upstream https://github.com/Zed-Mod-School/mod-base-test-1.git
-          git fetch upstream master
+          git fetch upstream
 
       - name: Check for new commits
         id: check_commits
         run: |
           UPSTREAM_BRANCH="master"
+          LOCAL_BRANCH="master"
           git fetch upstream $UPSTREAM_BRANCH
           NEW_COMMITS=$(git rev-list HEAD..upstream/$UPSTREAM_BRANCH --count)
 
@@ -39,26 +35,23 @@ jobs:
             echo "new_commits=false" >> $GITHUB_ENV
           fi
 
-      - name: Create new branch and attempt merge
+      - name: Create new branch and merge upstream changes
         if: env.new_commits == 'true'
         run: |
           PR_BRANCH="sync-upstream-$(date +%Y%m%d-%H%M%S)"
           git checkout -b $PR_BRANCH
-          git merge upstream/master || true  # Allow merge conflicts
-          git add . || true  # Stage conflicting files
-          git commit -m "Attempt to merge upstream changes (conflicts may need resolution)" || true
+          git merge --no-edit upstream/master
+          git push origin $PR_BRANCH
           echo "PR_BRANCH=$PR_BRANCH" >> $GITHUB_ENV
 
       - name: Create Pull Request
         if: env.new_commits == 'true'
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "Attempt to merge upstream changes (conflicts may need resolution)"
+          token: ${{ secrets.PAT }}
           branch: ${{ env.PR_BRANCH }}
-          delete-branch: true
           base: master
-          title: "Sync mod-base-test-1 changes"
-          body: "This PR merges updates from the upstream repository. **Conflicts may need resolution.**"
-          labels: "automated PR, needs resolution"
+          title: "Sync upstream changes"
+          body: "This PR merges updates from the upstream repository."
+          labels: "automated PR"
           assignees: "Github Actions"
