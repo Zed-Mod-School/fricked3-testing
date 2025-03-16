@@ -40,9 +40,19 @@ jobs:
         run: |
           PR_BRANCH="sync-upstream-$(date +%Y%m%d-%H%M%S)"
           git checkout -b $PR_BRANCH
+          echo "PR_BRANCH=$PR_BRANCH" >> $GITHUB_ENV
+
+      - name: Set Git Identity
+        if: env.new_commits == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+      - name: Merge upstream changes
+        if: env.new_commits == 'true'
+        run: |
           git merge --no-edit upstream/master
           git push origin $PR_BRANCH
-          echo "PR_BRANCH=$PR_BRANCH" >> $GITHUB_ENV
 
       - name: Create Pull Request
         if: env.new_commits == 'true'
