@@ -53,20 +53,16 @@ jobs:
         run: |
           git merge --no-edit upstream/master
 
+      - name: Debug PAT
+        run: |
+          echo "Using PAT: ${#PAT} characters long"
+        env:
+          PAT: ${{ secrets.PAT }}
+
       - name: Push Changes
         if: env.new_commits == 'true'
         run: |
+          echo "Setting Git remote..."
           git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/Zed-Mod-School/fricked3-testing.git
+          echo "Attempting to push..."
           git push origin $PR_BRANCH
-
-      - name: Create Pull Request
-        if: env.new_commits == 'true'
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.PAT }}
-          branch: ${{ env.PR_BRANCH }}
-          base: master
-          title: "Sync upstream changes"
-          body: "This PR merges updates from the upstream repository."
-          labels: "automated PR"
-          assignees: "Github Actions"
