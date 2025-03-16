@@ -6,7 +6,7 @@ on:
   workflow_dispatch:  # Allows manual trigger
 
 jobs:
-  sync:
+  sync_mod_base:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -14,15 +14,10 @@ jobs:
         with:
           fetch-depth: 0  # Fetch full history to detect new commits
 
-      - name: Set Git identity
-        run: |
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-
       - name: Add upstream repository
         run: |
           git remote add upstream https://github.com/Zed-Mod-School/mod-base-test-1.git
-          git fetch upstream
+          git fetch upstream master
 
       - name: Check for new commits
         id: check_commits
@@ -39,26 +34,15 @@ jobs:
             echo "new_commits=false" >> $GITHUB_ENV
           fi
 
-      - name: Create and attempt merge (even with conflicts)
-        if: env.new_commits == 'true'
-        run: |
-          PR_BRANCH="sync-upstream-$(date +%Y%m%d-%H%M%S)"
-          git checkout -b $PR_BRANCH
-          git merge upstream/master || true  # Allow merge conflicts to exist
-          git add . || true  # Stage conflicting files (GitHub will show conflicts)
-          git commit -m "Attempt to merge upstream changes (conflicts may need resolution)" || true
-          echo "PR_BRANCH=$PR_BRANCH" >> $GITHUB_ENV
-
-      - name: Create Pull Request (Even with Conflicts)
+      - name: Create Pull Request from mod-base-test-1
         if: env.new_commits == 'true'
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "Attempt to merge upstream changes (conflicts may need resolution)"
-          branch: ${{ env.PR_BRANCH }}  # `create-pull-request` will create and push this branch
-          delete-branch: true  # Ensures re-runs don't fail due to branch conflicts
-          base: master
-          title: "Sync upstream changes"
-          body: "This PR attempts to merge upstream changes. **Conflicts may need manual resolution.**"
+          repository: "Zed-Mod-School/mod-base-test-1"  # Upstream repo
+          branch: "master"  # Upstream branch
+          base: "master"  # Your fork’s branch
+          title: "Sync mod-base-test-1 changes"
+          body: "This PR merges updates from the mod-base-test-1 upstream repository."
           labels: "automated PR, needs resolution"
           assignees: "Github Actions"
