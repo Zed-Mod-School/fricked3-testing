@@ -28,7 +28,6 @@ jobs:
         id: check_commits
         run: |
           UPSTREAM_BRANCH="master"
-          LOCAL_BRANCH="master"
           git fetch upstream $UPSTREAM_BRANCH
           NEW_COMMITS=$(git rev-list HEAD..upstream/$UPSTREAM_BRANCH --count)
 
@@ -40,21 +39,18 @@ jobs:
             echo "new_commits=false" >> $GITHUB_ENV
           fi
 
-      - name: Create new branch and merge upstream changes
+      - name: Merge upstream changes into a new branch
         if: env.new_commits == 'true'
         run: |
-          PR_BRANCH="sync-upstream-$(date +%Y%m%d-%H%M%S)"
-          git checkout -b $PR_BRANCH
+          git checkout -b sync-upstream
           git merge --no-edit upstream/master
-          git push origin $PR_BRANCH
-          echo "PR_BRANCH=$PR_BRANCH" >> $GITHUB_ENV
 
       - name: Create Pull Request
         if: env.new_commits == 'true'
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ env.PR_BRANCH }}
+          branch: sync-upstream  # Auto-created by the action
           base: master
           title: "Sync upstream changes"
           body: "This PR merges updates from the upstream repository."
