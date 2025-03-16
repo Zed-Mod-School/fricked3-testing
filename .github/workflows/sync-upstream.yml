@@ -18,12 +18,23 @@ jobs:
         run: git remote add upstream https://github.com/Zed-Mod-School/mod-base-test-1.git
 
       - name: Fetch upstream changes
-        run: git fetch upstream
+        run: git fetch upstream --prune
+
+      - name: Detect upstream branch
+        id: detect_branch
+        run: |
+          UPSTREAM_BRANCH=$(git branch -r | grep 'upstream/' | sed 's/  upstream\///' | head -n 1)
+          echo "Detected upstream branch: $UPSTREAM_BRANCH"
+          echo "UPSTREAM_BRANCH=$UPSTREAM_BRANCH" >> $GITHUB_ENV
 
       - name: Check for new commits
         id: check_new_commits
         run: |
-          UPSTREAM_COMMITS=$(git rev-list HEAD..upstream/main --count)
+          if [ -z "$UPSTREAM_BRANCH" ]; then
+            echo "No upstream branch found. Exiting."
+            exit 1
+          fi
+          UPSTREAM_COMMITS=$(git rev-list HEAD..upstream/$UPSTREAM_BRANCH --count || echo 0)
           echo "Upstream commits: $UPSTREAM_COMMITS"
           if [ "$UPSTREAM_COMMITS" -eq "0" ]; then
             echo "No new commits found. Exiting."
@@ -34,7 +45,7 @@ jobs:
         run: |
           BRANCH_NAME="sync-upstream-$(date +%Y%m%d%H%M%S)"
           git checkout -b "$BRANCH_NAME"
-          git merge upstream/main || echo "Merge conflicts detected. Resolving manually."
+          git merge upstream/$UPSTREAM_BRANCH || echo "Merge conflicts detected. Resolving manually."
           git status
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
 
