@@ -392,9 +392,9 @@
           (+! (-> gp-0 y) 8192.0)
           (vector-! gp-0 gp-0 (-> self root trans))
           (let ((s5-0 (-> self root quat)))
-            (if (< 491520.0 (vector-vector-xz-distance (-> s4-0 control trans) (-> self root trans)))
-                (send-event (handle->process (-> self taskman)) 'fail)
-                )
+            ;; (if (< 491520.0 (vector-vector-xz-distance (-> s4-0 control trans) (-> self root trans)))
+            ;;     (send-event (handle->process (-> self taskman)) 'fail)
+            ;;     )
             (let ((s4-1 (-> self entity)))
               (when (= (send-event (handle->process (-> self taskman)) 'target-current-ring-ent) s4-1)
                 (cond
@@ -575,6 +575,8 @@
   (set! (-> this minimap) #f)
   (quaternion->matrix (-> this mat) (-> this root quat))
   (vector-copy! (-> this mat trans) (-> this root trans))
+  
+  ;;(set-vector-xyz! (-> this root trans) (* (-> this root trans x) (rand-vu-float-range 0.009 1.001) ) (* (-> this root trans y) (rand-vu-float-range 0.009 1.001))  (* (-> this root trans z) (rand-vu-float-range 0.009 1.001)  ))   
   (set! (-> this taskman) (the-as handle #f))
   (set! (-> this part) (create-launch-control (-> *part-group-id-table* 518) this))
   (set! (-> this player-part) (create-launch-control (-> *part-group-id-table* 519) this))

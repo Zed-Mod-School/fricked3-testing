@@ -2865,6 +2865,7 @@
   (set! (-> this scale) (rnd-float-range this 1.15 1.35))
   (let ((f0-1 (-> this scale)))
     (set-vector! (-> this root scale) f0-1 f0-1 f0-1 1.0)
+    (fricked-adjust-vector this)
     )
   (let ((v1-9 (-> this neck)))
     (set! (-> v1-9 up) (the-as uint 1))

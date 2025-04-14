@@ -294,6 +294,7 @@
       )
     (set! (-> this root) s5-0)
     )
+    (fricked-adjust-vector this)
   0
   (none)
   )

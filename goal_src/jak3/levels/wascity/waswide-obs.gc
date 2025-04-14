@@ -555,6 +555,7 @@
   (quaternion-vector-angle! (-> this root quat) *up-vector* (* 182.04445 (rand-vu-float-range 0.0 360.0)))
   (let ((f0-4 (rand-vu-float-range 0.9 1.1)))
     (set-vector! (-> this root scale) f0-4 f0-4 f0-4 1.0)
+    (fricked-adjust-vector this)
     )
   (transform-post)
   (go (method-of-object this idle))

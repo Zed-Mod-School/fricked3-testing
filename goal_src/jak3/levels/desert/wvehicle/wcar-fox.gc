@@ -52,6 +52,7 @@
     (set! (-> (the-as collide-shape-prim-group s5-0) child 7 local-sphere w) 20889.6)
     )
   ((method-of-type wcar-base vehicle-method-62) this)
+     (fricked-adjust-vector this)
   0
   (none)
   )

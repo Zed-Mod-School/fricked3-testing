@@ -5,6 +5,7 @@
 ;; name in dgo: voicebox
 ;; dgos: GAME
 
+(defun-extern fricked-adjust-vector process-drawable none)
 (define-extern *particle-vel* vector)
 
 ;; DECOMP BEGINS
@@ -177,9 +178,10 @@
           )
         (send-event (ppointer->process (-> self parent)) 'joystick (-> self twist) -1.0)
         )
-      (set! (-> self root scale x) f30-0)
-      (set! (-> self root scale y) f30-0)
-      (set! (-> self root scale z) f30-0)
+      ;; (set! (-> self root scale x) f30-0)
+      ;; (set! (-> self root scale y) f30-0)
+      ;; (set! (-> self root scale z) f30-0)
+      
       )
     )
   0
@@ -277,6 +279,7 @@
 
 ;; WARN: Return type mismatch remote vs none.
 (defmethod init ((this remote))
+ 
   (reset-to-collide-spec (-> this focus) (collide-spec jak player-list))
   (initialize-skeleton
     this
@@ -561,6 +564,7 @@
   (vector-copy! (-> self base-trans) (-> self root trans))
   (set! (-> self total-time) (seconds 90))
   (set! (-> self timer?) arg2)
+  (fricked-adjust-vector self)
   (go-virtual wait)
   )
 

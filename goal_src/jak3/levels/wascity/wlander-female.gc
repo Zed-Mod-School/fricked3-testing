@@ -886,6 +886,7 @@
         (f0-15 (rnd-float-range this 1.0 1.25))
         )
     (set-vector! (-> this root scale) f0-15 f30-0 f0-15 1.0)
+    (fricked-adjust-vector this)
     )
   (let ((f0-17 (rnd-float-range this 0.9 1.0)))
     (set-vector! (-> this draw color-mult) f0-17 f0-17 f0-17 1.0)

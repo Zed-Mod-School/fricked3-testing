@@ -704,6 +704,7 @@
   (setup-enemy! this *tomb-baby-spider-nav-enemy-info*)
   (let ((f0-0 (rnd-float-range this 0.75 1.0)))
     (set-vector! (-> this root scale) f0-0 f0-0 f0-0 1.0)
+    (fricked-adjust-vector this)
     )
   (none)
   )

@@ -1660,6 +1660,7 @@
         (f0-3 (rnd-float-range this 1.2 1.5))
         )
     (set-vector! (-> this root scale) f0-3 f30-0 f0-3 1.0)
+    (fricked-adjust-vector this)
     )
   (setup-masks (-> this draw) 0 -1)
   (let ((v1-23 (rnd-int this 3)))

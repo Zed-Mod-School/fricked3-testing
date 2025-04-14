@@ -1691,6 +1691,7 @@
         (t9-10 a0-37 (the-as vector a1-9) (the-as quaternion a2-7) a3-1)
         )
       (mode-set! (-> this neck) (joint-mod-mode reset))
+       (fricked-adjust-vector this)
       )
     )
   0
