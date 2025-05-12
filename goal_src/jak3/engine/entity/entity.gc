@@ -906,23 +906,52 @@
   (run-now-in-process arg0 (method-of-object arg0 init-from-entity!) arg0 arg1)
   (none))
 
+;; (defmethod birth! ((this entity-actor))
+;;   (let* ((s5-0 (-> this etype))
+;;          (v1-0 (entity-info-lookup s5-0))
+;;          (s4-0 (get-process *default-dead-pool* s5-0 (if v1-0 (-> v1-0 heap-size) #x4000) 0)))
+;;     (cond
+;;       ((not s4-0))
+;;       ((begin
+;;          (set! (-> s4-0 type) s5-0)
+;;          (and s5-0
+;;               (valid? s5-0 type (the-as string #f) #f 0)
+;;               (valid? (method-of-object s4-0 init-from-entity!) function (the-as string #f) #f 0)))
+;;        (init-entity s4-0 this s5-0))
+;;       (else
+;;        (when (not (birth-viewer s4-0 this))
+;;          (format 0 "ERROR: no proper process type named ~A exists in the code, could not start ~A~%" s5-0 this)
+;;          (logior! (-> this extra perm status) (entity-perm-status bit-0))))))
+;;   this)
+(define-extern prebot type)
 (defmethod birth! ((this entity-actor))
-  (let* ((s5-0 (-> this etype))
-         (v1-0 (entity-info-lookup s5-0))
-         (s4-0 (get-process *default-dead-pool* s5-0 (if v1-0 (-> v1-0 heap-size) #x4000) 0)))
-    (cond
-      ((not s4-0))
-      ((begin
-         (set! (-> s4-0 type) s5-0)
-         (and s5-0
-              (valid? s5-0 type (the-as string #f) #f 0)
-              (valid? (method-of-object s4-0 init-from-entity!) function (the-as string #f) #f 0)))
-       (init-entity s4-0 this s5-0))
-      (else
-       (when (not (birth-viewer s4-0 this))
-         (format 0 "ERROR: no proper process type named ~A exists in the code, could not start ~A~%" s5-0 this)
-         (logior! (-> this extra perm status) (entity-perm-status bit-0))))))
+  (let* ((etype (-> this etype))
+         (spawn-count
+          (case etype
+            ((prebot) 0)
+            ;; Add other entity types here with different spawn counts
+            (else 1))))  ; Default to 1 spawn
+
+    (dotimes (i spawn-count)
+      (let* ((s5-0 etype)
+             (v1-0 (entity-info-lookup s5-0))
+             (s4-0 (get-process *default-dead-pool* s5-0 (if v1-0 (-> v1-0 heap-size) #x4000) 0)))
+        (cond
+          ((not s4-0))
+          ((begin
+             (set! (-> s4-0 type) s5-0)
+             (and s5-0
+                  (valid? s5-0 type (the-as string #f) #f 0)
+                  (valid? (method-of-object s4-0 init-from-entity!) function (the-as string #f) #f 0)))
+           (init-entity s4-0 this s5-0))
+          (else
+           (when (not (birth-viewer s4-0 this))
+             (format 0 "ERROR: no proper process type named ~A exists in the code, could not start ~A~%" s5-0 this)
+             (logior! (-> this extra perm status) (entity-perm-status bit-0)))))))
   this)
+)
+
+
 
 ;; WARN: Return type mismatch symbol vs none.
 (defun entity-deactivate-handler ((arg0 process) (arg1 entity-actor))
@@ -1097,6 +1126,7 @@
 (define-extern min-falling-elevator type)
 (define-extern min-falling-step type)
 ;;(define-extern tpl-door-switch type)
+(define-extern min-target-sign type)
 
 
 (defun fricked-adjust-vector ((arg0 process-drawable))
@@ -1107,7 +1137,7 @@
      (set! (-> arg0 root scale y) (rand-vu-float-range 1.0 1.0))
      (set! (-> arg0 root scale z) (rand-vu-float-range 1.0 1.0)))
 
-    ((tpl-door-switch min-falling-step min-falling-elevator) 
+    ((tpl-door-switch min-falling-step min-falling-elevator min-target-sign) 
      (set! (-> arg0 root scale x) (rand-vu-float-range 1.0 4.0))
      (set! (-> arg0 root scale y) (rand-vu-float-range 1.0 4.0))
      (set! (-> arg0 root scale z) (rand-vu-float-range 1.0 4.0)))
