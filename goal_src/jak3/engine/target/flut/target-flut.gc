@@ -492,7 +492,7 @@
 (defbehavior target-flut-post-post target ()
   (vector+! (-> self flut flut-trans) (-> self control trans) (-> self control cspace-offset))
   (quaternion-copy! (the-as quaternion (-> self flut flut-quat)) (-> self control quat))
-  (vector-copy! (-> self flut flut-scale) (-> self control scale))
+  ;;(vector-copy! (-> self flut flut-scale) (-> self control scale))
   (let ((v1-8 (-> *target-shadow-control* settings shadow-dir quad)))
     (set! (-> *flut-shadow-control* settings shadow-dir quad) v1-8)
     )

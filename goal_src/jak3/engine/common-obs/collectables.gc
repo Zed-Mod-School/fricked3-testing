@@ -1857,6 +1857,7 @@
     (the-as pair 0)
     )
   (set-vector! (-> this root scale) 1.5 1.5 1.5 1.0)
+  (fricked-adjust-vector this)
   (if (-> this entity)
       (nav-mesh-connect-from-ent this)
       )

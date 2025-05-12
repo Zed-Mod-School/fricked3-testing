@@ -875,6 +875,7 @@
               (vector-copy! v1-3 (-> arg0 root scale))
               (set! sv-160 v1-3)
               )
+              (fricked-adjust-vector this)
             (vector-float*! sv-160 sv-160 arg4)
             (quaternion-rotate-local-x! sv-156 sv-152 (the-as float arg2))
             (quaternion->matrix sv-148 sv-156)
@@ -997,6 +998,7 @@
     (set! (-> s5-0 max-iteration-count) (the-as uint 3))
     (set! (-> this root) s5-0)
     )
+   (fricked-adjust-vector this)
   0
   (none)
   )

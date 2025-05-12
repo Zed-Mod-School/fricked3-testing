@@ -20,6 +20,7 @@
 
 
 (defmethod init-collision! ((this v-turtle))
+
   (let ((s5-0 (new 'process 'collide-shape-moving this (collide-list-enum usually-hit-by-player))))
     (set! (-> s5-0 dynam) (copy *standard-dynamics* 'process))
     (set! (-> s5-0 reaction) cshape-reaction-default)
@@ -70,6 +71,7 @@
     (set! (-> s5-0 nav-flags) (nav-flags has-child-spheres))
     (set! (-> this root) s5-0)
     )
+    (fricked-adjust-vector this)
   0
   (none)
   )
@@ -112,7 +114,8 @@
   )
 
 (defmethod vehicle-method-79 ((this v-turtle))
-  (set-vector! (-> this root scale) 1.0 1.0 1.07 1.0)
+  ;;(set-vector! (-> this root scale) 1.0 1.0 1.07 1.0)
+
   (let ((s5-0 (new 'stack-no-clear 'inline-array 'quaternion 3)))
     (set-vector! (-> s5-0 2) -3640.889 3640.889 3640.889 -3640.889)
     (dotimes (s4-0 (-> this info physics-model wheel-count))

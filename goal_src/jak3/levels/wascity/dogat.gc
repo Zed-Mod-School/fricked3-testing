@@ -519,6 +519,7 @@
     )
   (setup-enemy! this *dogat-nav-enemy-info*)
   (set-vector! (-> this root scale) 2.5 2.5 2.5 1.0)
+  (fricked-adjust-vector this)
   (quaternion->matrix (-> this rotation-matrix) (-> this root quat))
   (logior! (-> this skel status) (joint-control-status sync-math))
   (logclear! (-> this mask) (process-mask enemy))

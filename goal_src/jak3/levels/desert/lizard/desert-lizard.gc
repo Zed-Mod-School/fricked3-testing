@@ -1184,6 +1184,7 @@
   (set! (-> this color-index) (flut-random-color-index))
   (flut-color-from-index (-> this color-index))
   (set! (-> this graph) #f)
+     (fricked-adjust-vector this)
   0
   (none)
   )

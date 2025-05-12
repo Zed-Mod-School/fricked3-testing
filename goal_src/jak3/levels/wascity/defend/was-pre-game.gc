@@ -2736,6 +2736,7 @@
   :trans (behavior ()
     (cond
       ((or (and *cheat-mode* (cpad-pressed? 0 l1)) (>= (-> self miss-count) (-> self miss-max)))
+        
        (go-virtual lose)
        )
       ((or (and *cheat-mode* (cpad-pressed? 0 r1))
@@ -2788,6 +2789,7 @@
            )
       (cond
         ((handle->process gp-0)
+        (reset-actors 'debug)
          (send-event (handle->process gp-0) 'fail)
          (while (handle->process gp-0)
            (suspend)

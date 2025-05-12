@@ -958,6 +958,7 @@
         )
       )
     )
+       (fricked-adjust-vector this)
   (let ((v1-26 (new 'stack-no-clear 'vector)))
     (set! (-> v1-26 x) 8.0)
     (set! (-> v1-26 y) 8.0)
@@ -1340,6 +1341,8 @@
     (set! (-> self root) gp-0)
     )
   (vector-identity! (-> self root scale))
+     (fricked-adjust-vector self)
+  
   (initialize-skeleton
     self
     (the-as skeleton-group (art-group-get-by-name *level* "skel-beast-rider" (the-as (pointer level) #f)))
@@ -2403,6 +2406,7 @@
   (logclear! (-> this mask) (process-mask actor-pause))
   (logior! (-> this mask) (process-mask enemy))
   (set-vector! (-> this root scale) 2.0 2.0 2.0 1.0)
+     (fricked-adjust-vector this)
   (set! (-> this draw shadow-ctrl settings fade-dist) 942080.0)
   (set! (-> this path-pos) 0.0)
   (set! (-> this path-pos-speed) 1.0)

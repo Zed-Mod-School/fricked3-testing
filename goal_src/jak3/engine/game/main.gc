@@ -7,6 +7,7 @@
 
 (define-extern menu-respond-to-pause (function symbol))
 (define-extern anim-tester-add-object (function string none))
+(defun-extern runs-every-frame none)
 
 ;; DECOMP BEGINS
 
@@ -518,6 +519,7 @@
   )
 
 (defun main-cheats ()
+
   (when (and (cpad-hold? 0 l3) (or *cheat-mode* (not (demo?))))
     ((lambda ()
        (when (nonzero? (-> *cpad-list* cpads 0 button0-rel 0))
@@ -1474,6 +1476,8 @@
           (set! t9-13 (car s5-5))
           )
         )
+
+        (runs-every-frame)
       ;; look for cheat-code inputs
       (main-cheats)
       )

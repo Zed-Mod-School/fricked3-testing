@@ -578,7 +578,8 @@
             )
        0
        (if (logtest? (vehicle-flag turbo-boost) (-> this v-flags))
-           (set! f1-5 (+ 1.0 (* (-> this turbo-boost-factor) (-> this info handling turbo-boost-factor))))
+           (set! f1-5  (* (-> this turbo-boost-factor) (rand-vu-float-range 0.3 7.0));;(+ 1.0 (* (-> this turbo-boost-factor) (-> this info handling turbo-boost-factor)))
+           )
            )
        (if (< (-> this engine-thrust) f1-5)
            (+! (-> this engine-thrust)

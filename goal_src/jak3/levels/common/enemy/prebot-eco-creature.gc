@@ -1679,6 +1679,7 @@
   (set! (-> this flags) (eco-creature-flag))
   (set! (-> this trail-sound) (new-sound-id))
   (send-event (ppointer->process (-> this parent)) 'start-critter)
+  (fricked-adjust-vector this)
   0
   (none)
   )
@@ -2541,6 +2542,7 @@
       )
     (set! (-> this root) s5-0)
     )
+    (fricked-adjust-vector this)
   0
   (none)
   )
@@ -3335,6 +3337,7 @@
       )
     (set! (-> this root) s5-0)
     )
+    (fricked-adjust-vector this)
   0
   (none)
   )
