@@ -1220,6 +1220,11 @@ foreach(CURL_TEST
   curl_internal_test(${CURL_TEST})
 endforeach()
 
+# Force-set HAVE_IOCTLSOCKET_FIONBIO on Windows (clang try_compile may fail to detect it)
+if(WIN32 AND NOT HAVE_IOCTLSOCKET_FIONBIO)
+  set(HAVE_IOCTLSOCKET_FIONBIO 1)
+endif()
+
 if(HAVE_FILE_OFFSET_BITS)
   set(_FILE_OFFSET_BITS 64)
   set(CMAKE_REQUIRED_FLAGS "-D_FILE_OFFSET_BITS=64")
