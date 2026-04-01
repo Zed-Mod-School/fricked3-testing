@@ -149,6 +149,8 @@
     ;(progress-cheats-fast-speed            fast-speed            #t           nest-boss-resolution      :skill 250)
     ;(progress-cheats-slow-speed            slow-speed            #t           nest-boss-resolution      :skill 250)
     ;(progress-cheats-statistics            statistics            auto         atoll-water-introduction  :unlock (progress-cheats-statistics-unlock pc-cheat-statistics-unlock))
+    ;(progress-cheats-city-peace            city-peace            #t           nest-boss-resolution      :skill 200)
+    ;(progress-cheats-hijack-lines          hijack-lines          #t           nest-boss-resolution      :skill 200)
     )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -817,7 +819,7 @@
   (format file "  (minimap-force-north ~A)~%" (-> obj minimap-force-north))
   (format file "  (hires-clouds? ~A)~%" (-> obj hires-clouds?))
   (format file "  (text-language ~D)~%" (-> obj text-language))
-  (format file "  (subtitle-language ~D)~%" (-> obj text-language))
+  (format file "  (subtitle-language ~D)~%" (-> obj subtitle-language))
   (format file "  (controller-led-status? ~A)~%" (-> obj controller-led-status?))
   (format file "  (controller-swap-r1-r2? ~A)~%" (-> obj controller-swap-r1-r2?))
   (format file "  (speedrunner-mode-custom-bind ~D)~%" (-> obj speedrunner-mode-custom-bind))

@@ -96,7 +96,7 @@ struct PadData {
 
   std::array<bool, 16> button_data = {false, false, false, false, false, false, false, false,
                                       false, false, false, false, false, false, false, false};
-  std::array<u8, 12> pressure_data = {255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255};
+  std::array<u8, 12> pressure_data = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
   // Normal Buttons
   bool select() const { return button_data.at(static_cast<int>(ButtonIndex::SELECT)); };
@@ -391,7 +391,7 @@ extern const InputBindingGroups DEFAULT_MOUSE_BINDS;
 // So there are some potential solutions but this doesn't feel high priority and this was always an
 // issue.
 struct CommandBinding {
-  enum Source { CONTROLLER, KEYBOARD, MOUSE };
+  enum class Source { CONTROLLER, KEYBOARD, MOUSE };
 
   u32 host_key;
   InputModifiers modifiers;
