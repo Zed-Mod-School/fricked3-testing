@@ -595,6 +595,7 @@
       (forward-up->quaternion (-> this root quat) s5-6 s4-3)
       )
     (set-vector! (-> this root scale) 3.0 3.0 1.0 1.0)
+    (fricked-adjust-vector this)
     0
     (none)
     )

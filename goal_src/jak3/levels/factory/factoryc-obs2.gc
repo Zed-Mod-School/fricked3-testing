@@ -971,6 +971,7 @@
 ;; WARN: Return type mismatch vector vs none.
 (defmethod base-plat-method-33 ((this fac-move-plat-a))
   (set-vector! (-> this root scale) 1.4 1.4 1.6 1.0)
+  (fricked-adjust-vector this)
   (none)
   )
 

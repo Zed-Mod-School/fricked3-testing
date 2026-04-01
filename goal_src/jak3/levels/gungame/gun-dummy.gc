@@ -1403,6 +1403,7 @@
 (defmethod init-tpath ((this gun-dummy-kg-b) (arg0 tpath-info))
   (call-parent-method this arg0)
   (set-vector! (-> this root scale) 0.9 0.9 1.0 1.0)
+  (fricked-adjust-vector this)
   (none)
   )
 
@@ -1430,6 +1431,7 @@
   (set! (-> this joint-exploder) *gun-rc-two-eyes-exploder-params*)
   (set! (-> this joint-explode-anim-index) 5)
   (set-vector! (-> this root scale) 1.2 1.2 1.0 1.0)
+  (fricked-adjust-vector this)
   (none)
   )
 
@@ -1457,6 +1459,7 @@
   (set! (-> this joint-exploder) *gun-rc-one-eye-exploder-params*)
   (set! (-> this joint-explode-anim-index) 5)
   (set-vector! (-> this root scale) 1.2 1.2 1.0 1.0)
+  (fricked-adjust-vector this)
   (none)
   )
 
@@ -1484,6 +1487,7 @@
   (set! (-> this joint-exploder) *gun-rc-three-eyes-exploder-params*)
   (set! (-> this joint-explode-anim-index) 5)
   (set-vector! (-> this root scale) 1.2 1.2 1.0 1.0)
+  (fricked-adjust-vector this)
   (none)
   )
 
@@ -1521,6 +1525,7 @@
 (defmethod init-tpath ((this gun-dummy-kg-c) (arg0 tpath-info))
   (call-parent-method this arg0)
   (set-vector! (-> this root scale) 0.9 0.9 1.0 1.0)
+  (fricked-adjust-vector this)
   (none)
   )
 
@@ -1550,6 +1555,7 @@
 (defmethod init-tpath ((this gun-dummy-kg-big) (arg0 tpath-info))
   (call-parent-method this arg0)
   (set-vector! (-> this root scale) 1.4 1.4 1.0 1.0)
+  (fricked-adjust-vector this)
   (none)
   )
 
@@ -1582,6 +1588,7 @@
 (defmethod init-tpath ((this gun-dummy-rc-four-eyes) (arg0 tpath-info))
   (call-parent-method this arg0)
   (set-vector! (-> this root scale) 1.2 1.2 1.0 1.0)
+  (fricked-adjust-vector this)
   (none)
   )
 
@@ -1594,6 +1601,7 @@
 (defmethod init-tpath ((this gun-dummy-kg-bonus) (arg0 tpath-info))
   (call-parent-method this arg0)
   (set-vector! (-> this root scale) 0.9 0.9 1.0 1.0)
+  (fricked-adjust-vector this)
   (none)
   )
 
@@ -1623,6 +1631,7 @@
 (defmethod init-tpath ((this gun-dummy-rc-three-eyes-bonus) (arg0 tpath-info))
   (call-parent-method this arg0)
   (set-vector! (-> this root scale) 1.2 1.2 1.0 1.0)
+  (fricked-adjust-vector this)
   (none)
   )
 
@@ -1747,6 +1756,7 @@
   (set! (-> this joint-explode-anim-index) 5)
   (set! (-> this joint-exploder) *gun-rachet-exploder-params*)
   (set-vector! (-> this root scale) 1.3 1.3 1.0 1.0)
+  (fricked-adjust-vector this)
   (none)
   )
 
@@ -1771,6 +1781,7 @@
   (set! (-> this joint-explode-anim-index) 5)
   (set! (-> this joint-exploder) *gun-clank-exploder-params*)
   (set-vector! (-> this root scale) 1.5 1.3 1.0 1.0)
+  (fricked-adjust-vector this)
   (none)
   )
 

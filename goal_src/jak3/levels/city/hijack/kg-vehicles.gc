@@ -593,6 +593,7 @@
     (set! (-> self root) gp-0)
     )
   (set-vector! (-> self root scale) 2.0 2.0 2.0 1.0)
+  (fricked-adjust-vector self)
   (initialize-skeleton
     self
     (the-as skeleton-group (art-group-get-by-name *level* "skel-dark-barrel" (the-as (pointer level) #f)))

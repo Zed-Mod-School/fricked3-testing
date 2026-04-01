@@ -1093,6 +1093,7 @@
   (logclear! (-> this enemy-flags) (enemy-flag actor-pause-backup))
   (let ((f0-0 (-> this size)))
     (set-vector! (-> this root scale) f0-0 f0-0 f0-0 1.0)
+    (fricked-adjust-vector this)
     (set! (-> this draw bounds w) (* (-> this draw bounds w) f0-0))
     )
   (set! (-> this angle-spot) (* 182.04445 (rnd-float-range this 0.0 360.0)))

@@ -971,6 +971,7 @@
   (init-collision! self)
   (quaternion-identity! (-> self root quat))
   (vector-identity! (-> self root scale))
+  (fricked-adjust-vector self)
   (set! (-> self level) (level-get *level* 'factoryb))
   (initialize-skeleton
     self

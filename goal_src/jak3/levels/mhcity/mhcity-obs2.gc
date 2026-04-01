@@ -127,6 +127,7 @@
     (the-as pair 0)
     )
   (set-vector! (-> self root scale) (-> arg0 scale) (-> arg0 scale) (-> arg0 scale) 1.0)
+  (fricked-adjust-vector self)
   (set! (-> self part) (create-launch-control group-puffer-hard-blowing-steam self))
   (set! (-> self period) (the-as uint 1200))
   (set! (-> self duration) (the-as uint 750))

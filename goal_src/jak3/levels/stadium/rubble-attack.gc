@@ -313,6 +313,7 @@
   (setup-masks (-> self draw) 0 2)
   (vector+! (-> self root trans) (-> self root trans) (new 'static 'vector :y 81920.0 :w 1.0))
   (set-vector! (-> self root scale) 2.0 1.0 2.0 1.0)
+  (fricked-adjust-vector self)
   (set! (-> self ring-jmod 0) (the-as joint-mod (new 'process 'joint-mod-spinner self 5 *y-vector* 49152.0)))
   (set! (-> self ring-jmod 1) (the-as joint-mod (new 'process 'joint-mod-spinner self 6 *y-vector* -32768.0)))
   (set! (-> self draw shadow-ctrl) *dm-missile-target-shadow-control*)

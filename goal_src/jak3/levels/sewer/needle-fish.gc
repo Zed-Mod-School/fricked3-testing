@@ -726,6 +726,7 @@
     (set! (-> a0-6 param1) this)
     )
   (set-vector! (-> this root scale) 1.0 0.5 1.0 1.0)
+  (fricked-adjust-vector this)
   (set! (-> this scared-timer) 0)
   (setup-masks (-> this draw) 3 0)
   0

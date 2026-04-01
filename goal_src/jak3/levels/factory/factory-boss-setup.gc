@@ -1745,6 +1745,7 @@
   (logior! (-> this skel status) (joint-control-status eye-anim))
   (logior! (-> this mask) (process-mask enemy))
   (set-vector! (-> this root scale) 1.6 1.6 1.6 1.0)
+  (fricked-adjust-vector this)
   (vector-copy! (-> this center) (-> this root trans))
   (+! (-> this center z) 83992.98)
   (+! (-> this center y) -65536.0)

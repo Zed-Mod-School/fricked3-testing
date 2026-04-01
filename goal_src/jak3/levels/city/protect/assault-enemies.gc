@@ -993,6 +993,7 @@
 (defmethod initialize-allocations ((this special-health))
   (call-parent-method this)
   (set-vector! (-> this root scale) 1.5 1.5 1.5 1.0)
+  (fricked-adjust-vector this)
   (none)
   )
 
@@ -1142,6 +1143,7 @@
          (joint-control-channel-group-eval! a0-30 (the-as art-joint-anim a1-15) num-func-identity)
          )
        (set-vector! (-> this root scale) 2.0 2.0 2.0 1.0)
+       (fricked-adjust-vector this)
        )
       )
     (case (-> this ammo-type)

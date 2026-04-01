@@ -3126,6 +3126,7 @@
     )
   (setup-enemy! this *bombbot-nav-enemy-info*)
   (set-vector! (-> this root scale) 1.0 1.0 1.0 1.0)
+  (fricked-adjust-vector this)
   (let ((v1-7 (-> this nav)))
     (set! (-> v1-7 speed-scale) 1.0)
     )

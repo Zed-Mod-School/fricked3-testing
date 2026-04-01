@@ -1998,6 +1998,7 @@
   (set-vector! (-> this draw color-mult) 0.0 0.0 0.1 1.0)
   (set-vector! (-> this draw color-emissive) 0.1 0.5 0.5 1.5)
   (set-vector! (-> this root scale) 4.0 4.0 4.0 1.0)
+  (fricked-adjust-vector this)
   (none)
   )
 

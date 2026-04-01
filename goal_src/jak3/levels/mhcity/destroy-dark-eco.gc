@@ -729,6 +729,7 @@
   (quaternion-identity! (-> self root quat))
   (vector-copy! (-> self root trans) arg0)
   (set-vector! (-> self root scale) arg1 arg1 arg1 1.0)
+  (fricked-adjust-vector self)
   (set! (-> self shock-sound) (new-sound-id))
   (set! (-> self plasma-sound) (new-sound-id))
   (set! (-> self last-attack-id) (the-as uint 0))

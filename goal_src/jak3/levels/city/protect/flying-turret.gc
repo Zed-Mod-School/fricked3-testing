@@ -695,6 +695,7 @@
   (set! (-> this anim-run) 2)
   (set! (-> this speed-run) 102400.0)
   (set-vector! (-> this root scale) 2.0 2.0 2.0 1.0)
+  (fricked-adjust-vector this)
   (set! (-> this draw lod-set lod 0 dist) 409600.0)
   (set! (-> this engine-sound) (new-sound-id))
   (set! (-> this tilt-sound) (new-sound-id))

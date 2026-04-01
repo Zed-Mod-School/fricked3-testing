@@ -139,6 +139,7 @@
   (vector-copy! (-> self root trans) arg0)
   (quaternion-copy! (-> self root quat) arg1)
   (vector-identity! (-> self root scale))
+  (fricked-adjust-vector self)
   (go-virtual idle)
   )
 
@@ -236,6 +237,7 @@
     (vector-copy! (-> self root trans) arg1)
     (quaternion-copy! (-> self root quat) arg2)
     (vector-identity! (-> self root scale))
+    (fricked-adjust-vector self)
     (if s4-2
         (ja :group! (-> self draw art-group data 7) :num! min)
         )

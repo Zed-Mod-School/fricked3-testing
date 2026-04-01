@@ -1544,6 +1544,7 @@
   (quaternion-identity! (-> self root quat))
   (quaternion-rotate-local-x! (-> self root quat) (-> self root quat) 16384.0)
   (set-vector! (-> self root scale) 2.0 2.0 2.0 1.0)
+  (fricked-adjust-vector self)
   (cond
     ((or (= arg1 (skeet-mode a-x19))
          (= arg1 (skeet-mode a-x0))

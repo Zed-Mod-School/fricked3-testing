@@ -1386,6 +1386,7 @@
   (set! (-> self char) arg0)
   (set! (-> self root) (new 'process 'trsqv))
   (set-vector! (-> self root scale) (-> arg0 scale) (-> arg0 scale) (-> arg0 scale) 1.0)
+  (fricked-adjust-vector self)
   (set! (-> self cloth-reset-time) (-> arg0 cloth-reset-time))
   (set! (-> self use-orient-cloth-reset?) (-> arg0 use-orient-cloth-reset?))
   (let ((s4-1 (art-group-get-by-name *level* (-> arg0 skel) (the-as (pointer level) #f))))

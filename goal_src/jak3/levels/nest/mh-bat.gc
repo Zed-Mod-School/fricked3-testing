@@ -1577,6 +1577,7 @@
 
 (defmethod set-scale! ((this mh-bat) (arg0 float))
   (set-vector! (-> this root scale) arg0 arg0 arg0 1.0)
+  (fricked-adjust-vector this)
   0
   (none)
   )

@@ -479,6 +479,7 @@
           )
       (quaternion-rotate-local-y! (-> this root quat) (-> this root quat) f0-3)
       (set-vector! (-> this root scale) f30-0 f30-0 f30-0 1.0)
+      (fricked-adjust-vector this)
       (set! (-> this root root-prim local-sphere w) (* (-> this root root-prim local-sphere w) f30-0))
       (dotimes (v1-17 (the-as int (-> s5-2 specific 0)))
         (set! (-> (the-as collide-shape-prim-group s5-2) child v1-17 local-sphere w)

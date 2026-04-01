@@ -158,6 +158,7 @@
   (logior! (-> this path flags) (path-control-flag display draw-line draw-point draw-text))
   (alloc-rbody-control! this *vol-lava-plat-platform-constants*)
   (set-vector! (-> this root scale) 1.4 1.3 1.4 1.0)
+  (fricked-adjust-vector this)
   (let ((s5-2 (-> this info control-point-count)))
     (dotimes (s4-2 s5-2)
       (let ((s3-1 (-> this control-point-array data s4-2)))

@@ -344,6 +344,7 @@
   (process-drawable-from-entity! this arg0)
   (let ((f0-0 (res-lump-float (-> this entity) 'scale :default 1.0)))
     (set-vector! (-> this root scale) f0-0 f0-0 f0-0 1.0)
+    (fricked-adjust-vector this)
     )
   (set! (-> this open-distance) 32768.0)
   (set! (-> this close-distance) 49152.0)

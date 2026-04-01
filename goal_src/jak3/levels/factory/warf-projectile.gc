@@ -239,6 +239,7 @@
   :enter (behavior ()
     (set-time! (-> self state-time))
     (set-vector! (-> self root scale) 1.0 1.0 1.0 1.0)
+    (fricked-adjust-vector self)
     )
   :trans (behavior ()
     (let ((gp-0 (matrix-copy! (new 'stack-no-clear 'matrix) (math-camera-matrix))))

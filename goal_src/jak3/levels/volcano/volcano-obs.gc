@@ -96,6 +96,7 @@
   (process-drawable-from-entity! this arg0)
   (vol-rising-step-method-23 this)
   (set-vector! (-> this root scale) 1.3 1.0 1.3 1.0)
+  (fricked-adjust-vector this)
   (let ((a1-3 (new 'stack-no-clear 'sync-info-params)))
     (let ((v1-8 0))
       (if #t

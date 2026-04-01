@@ -1493,6 +1493,7 @@
   (vector-copy! (-> this root trans) (-> arg0 extra trans))
   (quaternion-copy! (-> this root quat) (-> arg0 quat))
   (vector-identity! (-> this root scale))
+  (fricked-adjust-vector this)
   (vector-z-quaternion! (-> this dir) (-> this root quat))
   (set! (-> this joint-track) -1)
   (set! (-> this y-disable) (+ 37888.0 (-> this root trans y)))
